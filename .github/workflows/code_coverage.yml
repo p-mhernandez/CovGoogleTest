@@ -24,6 +24,8 @@ jobs:
       id-token: write
       pages: write
 
+    environment: 
+      name: github-pages
     # Specifies the type of runner that the job will run on.
     runs-on: wsl
 
