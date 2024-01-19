@@ -32,6 +32,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Echo location
+      shell: bash 
+      working-directory: ${{github.workspace}}
+      run: ls -al 
     # Configures your CMake project. Be sure the compile_commands.json file is created.
     - name: Configure project
       run: cd CovGoogleTest && cmake -DCPPTEST_COVERAGE=ON -DCPPTEST_HOME=/home/mhernandez/cpptest-coverage ..
