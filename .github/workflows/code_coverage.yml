@@ -32,10 +32,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Echo location
+    - name: Echo location and create build folder for cmake
       shell: bash 
       working-directory: ${{github.workspace}}
-      run: ls -al 
+      run: ls -al && mkdir build && cd build 
+      
     # Configures your CMake project. Be sure the compile_commands.json file is created.
     - name: Configure project
       run: cd CovGoogleTest && cmake -DCPPTEST_COVERAGE=ON -DCPPTEST_HOME=/home/mhernandez/cpptest-coverage ..
