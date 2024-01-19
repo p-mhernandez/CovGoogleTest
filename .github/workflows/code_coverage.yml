@@ -46,10 +46,12 @@ jobs:
     # Builds your CMake project. (This step is optional, as it is not required for code analysis).
     - name: Build project (optional)
       shell: bash
-      working-directory: ${{github.workspace}}/cd build
+      working-directory: ${{github.workspace}}/build
       run: make
     # Runs code analysis with C/C++test.
     - name: Run Google Tests and execute application
+      shell: bash
+      working-directory: ${{github.workspace}}/build
       run: ./goo_test
     
     # Runs code coverage with C/C++test CT
