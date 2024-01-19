@@ -55,9 +55,13 @@ jobs:
       run: ./goo_test
     
     # Runs code coverage with C/C++test CT
-    - name: Run C/C++test CT Compute 
+    - name: Run C/C++test CT Compute
+      shell: bash
+      working-directory: ${{github.workspace}}/build
       run: make cpptestcov-compute
 
     # Runs code coverage with C/C++test CT - report
-    - name: Run C/C++test CT Report 
+    - name: Run C/C++test CT Report
+      shell: bash
+      working-directory: ${{github.workspace}}/build
       run: make cpptestcov-report
