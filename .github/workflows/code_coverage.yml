@@ -21,6 +21,7 @@ jobs:
       # only required for workflows in private repositories
       actions: read
       contents: read
+      id-token: write
 
     # Specifies the type of runner that the job will run on.
     runs-on: wsl
