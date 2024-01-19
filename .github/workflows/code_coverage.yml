@@ -58,7 +58,7 @@ jobs:
     - name: Run C/C++test CT Compute and Report
       shell: bash
       working-directory: ${{github.workspace}}/build
-      run: make cpptestcov-compute && cpptestcov-report
+      run: make cpptestcov-compute && make cpptestcov-report
 
     - name: Rename Coverage Report
       working-directory: ${{github.workspace}}
