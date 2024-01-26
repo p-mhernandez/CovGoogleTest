@@ -56,7 +56,7 @@ jobs:
     - name: Run Google Tests and execute application
       shell: bash
       working-directory: ${{github.workspace}}/build
-      run: ./goo_test
+      run: ./goo_test --gtest_output=xml:gtest.xml
     
     # Runs code coverage with C/C++test CT and create report 
     - name: Run C/C++test CT Compute and Report
