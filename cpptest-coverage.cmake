@@ -167,7 +167,7 @@ function (cpptest_enable_coverage)
         -scm 
         -checksum
         -project CovGoogleTest
-        -build CovGoogleTest-${{github.run_number}}
+        -build CovGoogleTest-${time}
         "${CPPTEST_SOURCE_DIR}/.coverage" >
         "${CPPTEST_SOURCE_DIR}/.coverage/line-coverage-dtp.xml"
     &&
