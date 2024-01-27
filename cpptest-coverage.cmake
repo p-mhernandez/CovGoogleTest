@@ -24,7 +24,7 @@ function (cpptest_enable_coverage)
   endif()
 
   # Configure C/C++test compiler identifier
-  set(CPPTEST_COMPILER_ID "gcc_10-64")
+  set(CPPTEST_COMPILER_ID "gcc_11-64")
   # Configure coverage type(s) for instrumentation engine - see 'cpptestcc -help' for details
   set(CPPTEST_COVERAGE_TYPE_INSTRUMENTATION -line-coverage -statement-coverage -block-coverage -decision-coverage -simple-condition-coverage -mcdc-coverage -function-coverage -call-coverage)
   # Configure coverage type(s) for reporting engine - see 'cpptestcov -help' for details
@@ -155,6 +155,28 @@ function (cpptest_enable_coverage)
     &&
     ${CPPTEST_HOME_DIR}/bin/cpptestcov report mcdc
         "${CPPTEST_SOURCE_DIR}/.coverage"
+    #DTP reports
+    &&
+    ${CPPTEST_HOME_DIR}/bin/cpptestcov report dtp-summary
+        -project CovGoogleTest
+        -build CovGoogleTest-${{github.run_number}}
+        "${CPPTEST_SOURCE_DIR}/.coverage" >
+        "${CPPTEST_SOURCE_DIR}/.coverage/coverage-stats-dtp.xml"
+    &&
+    ${CPPTEST_HOME_DIR}/bin/cpptestcov report dtp-details
+        -scm 
+        -checksum
+        -project CovGoogleTest
+        -build CovGoogleTest-${{github.run_number}}
+        "${CPPTEST_SOURCE_DIR}/.coverage" >
+        "${CPPTEST_SOURCE_DIR}/.coverage/line-coverage-dtp.xml"
+    &&
+    ${CPPTEST_HOME_DIR}/bin/cpptestcov report dtp-gtest
+        -scm 
+        -project CovGoogleTest
+        -build CovGoogleTest-${{github.run_number}}
+        "${CPPTEST_SOURCE_DIR}/build/gtest.xml" >
+        "${CPPTEST_SOURCE_DIR}/.coverage/gtest-dtp.xml"
   )
 
   # Apply coverage suppressions to existing coverage data files
@@ -162,6 +184,15 @@ function (cpptest_enable_coverage)
     COMMAND
     ${CPPTEST_HOME_DIR}/bin/cpptestcov suppress
         "${CPPTEST_SOURCE_DIR}/.coverage"
+  )
+
+  # Apply coverage suppressions to existing coverage data files
+  add_custom_target(cpptestcov-publish
+    COMMAND
+    ${CPPTEST_HOME_DIR}/bin/cpptestcov publish
+        -settings cpptestcov.properties
+        "${CPPTEST_SOURCE_DIR}/.coverage/coverage-stats-dtp.xml"
+        "${CPPTEST_SOURCE_DIR}/.coverage/gtest-dtp.xml"
   )
 
 endfunction()
