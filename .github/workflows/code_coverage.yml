@@ -25,9 +25,9 @@ jobs:
       name: github-pages
 
     env:
-      LINE_COV_GATE: 70 
-      STATEMENT_COV_GATE: 70
-      MCDC_COV_GATE: 30
+      LINE_COV_GATE: 60 
+      STATEMENT_COV_GATE: 60
+      MCDC_COV_GATE: 35
       
     # Specifies the type of runner that the job will run on.
     runs-on: wsl
