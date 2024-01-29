@@ -84,11 +84,20 @@ jobs:
       uses: actions/deploy-pages@v2
       
       # Using cpptestcov query for quality gates: -coverage LC,SC,BC,DC,SCC,MCDC,FC,CC
-    - name: Check All Coverage Gates
+    - name: Line Coverage Gates
       working-directory: ${{github.workspace}}
       shell: bash 
-      run: NUMBER=NUMBER=$(/home/mhernandez/cpptest-coverage/bin/cpptestcov query -coverage LC .coverage/) && if [ $NUMBER -lt $LINE_COV_GATE ]; then echo "Line coverage quality gate failed"; echo "Expected result $LINE_COV_GATE%, echieved $NUMBER%"; echo "Check html report https://p-mhernandez.github.io/CovGoogleTest/"; false; else echo "Line coverage quality gate passed with $NUMBER% (required $LINE_COV_GATE%)"; echo "check html report https://p-mhernandez.github.io/CovGoogleTest/ for details"; true; fi     
-    
+      run: NUMBER=$(/home/mhernandez/cpptest-coverage/bin/cpptestcov query -coverage LC .coverage/) && if [ $NUMBER -lt $LINE_COV_GATE ]; then echo "Line coverage quality gate failed"; echo "Expected result $LINE_COV_GATE%, echieved $NUMBER%"; echo "Check html report https://p-mhernandez.github.io/CovGoogleTest/"; false; else echo "Line coverage quality gate passed with $NUMBER% (required $LINE_COV_GATE%)"; echo "check html report https://p-mhernandez.github.io/CovGoogleTest/ for details"; true; fi     
+
+    - name: Statement Coverage Gates
+      working-directory: ${{github.workspace}}
+      shell: bash 
+      run: NUMBER=$(/home/mhernandez/cpptest-coverage/bin/cpptestcov query -coverage SC .coverage/) && if [ $NUMBER -lt $STATEMENT_COV_GATE ]; then echo "Statement coverage quality gate failed"; echo "Expected result $STATEMENT_COV_GATE%, achieved $NUMBER%"; echo "Check html report https://p-mhernandez.github.io/CovGoogleTest/"; false; else echo "Statement coverage quality gate passed with $NUMBER% (required $STATEMENT_COV_GATE%)"; echo "check html report https://p-mhernandez.github.io/CovGoogleTest/ for details"; true; fi     
+
+    - name: MCDC Coverage Gates
+      working-directory: ${{github.workspace}}
+      shell: bash 
+      run: NUMBER=$(/home/mhernandez/cpptest-coverage/bin/cpptestcov query -coverage MCDC .coverage/) && if [ $NUMBER -lt $MCDC_COV_GATE ]; then echo "MCDC coverage quality gate failed"; echo "Expected result $MCDC_COV_GATE%, achieved $NUMBER%"; echo "Check html report https://p-mhernandez.github.io/CovGoogleTest/"; false; else echo "MCDC coverage quality gate passed with $NUMBER% (required $MCDC_COV_GATE%)"; echo "check html report https://p-mhernandez.github.io/CovGoogleTest/ for details"; true; fi
     # Upload entire coverage directory
     - name: Archive coverage
       if: always()
