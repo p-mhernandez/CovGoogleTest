@@ -5,11 +5,6 @@ on:
   # Triggers the workflow on push or pull request events but only for the master (main) branch.
   push:
     branches: [ master, main ]
-    
-env:
-  LINE_COV_GATE=70
-  STATEMENT_COV_GATE=75
-  MCDC_COV_GATE=30 
   
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel.
 jobs:
@@ -28,6 +23,12 @@ jobs:
 
     environment: 
       name: github-pages
+
+    env: 
+      LINE_COV_GATE: 70 
+      STATEMENT_COV_GATE: 70
+      MCDC_COV_GATE: 30
+      
     # Specifies the type of runner that the job will run on.
     runs-on: wsl
 
@@ -81,11 +82,12 @@ jobs:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v2
-
+      
+      # Using cpptestcov query for quality gates: -coverage LC,SC,BC,DC,SCC,MCDC,FC,CC
     - name: Check All Coverage Gates
       working-directory: ${{github.workspace}}
       shell: bash 
-      run: cpptestcov query -coverage LC,SC,BC,DC,SCC,MCDC,FC,CC .coverage/
+      run: NUMBER=NUMBER=$(cpptestcov query -coverage LC .coverage/) && if [ $NUMBER -lt $LINE_COV_GATE ]; then echo "Line coverage quality gate failed"; echo "Expected result $LINE_COV_GATE%, echieved $NUMBER%"; echo "Check html report https://mirek-parasoft.github.io/iceoryx/"; false; else echo "Line coverage quality gate passed with $NUMBER% (required $LINE_COV_GATE%)"; echo "check html report https://mirek-parasoft.github.io/iceoryx/ for details"; true; fi     
     
     # Upload entire coverage directory
     - name: Archive coverage
