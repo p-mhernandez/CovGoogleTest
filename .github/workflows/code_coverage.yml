@@ -25,6 +25,7 @@ jobs:
       name: github-pages
 
     env: 
+      CPPTEST_HOME:"/home/mhernandez/cpptest-coverage"
       LINE_COV_GATE: 70 
       STATEMENT_COV_GATE: 70
       MCDC_COV_GATE: 30
@@ -87,7 +88,7 @@ jobs:
     - name: Check All Coverage Gates
       working-directory: ${{github.workspace}}
       shell: bash 
-      run: NUMBER=NUMBER=$(cpptestcov query -coverage LC .coverage/) && if [ $NUMBER -lt $LINE_COV_GATE ]; then echo "Line coverage quality gate failed"; echo "Expected result $LINE_COV_GATE%, echieved $NUMBER%"; echo "Check html report https://mirek-parasoft.github.io/iceoryx/"; false; else echo "Line coverage quality gate passed with $NUMBER% (required $LINE_COV_GATE%)"; echo "check html report https://mirek-parasoft.github.io/iceoryx/ for details"; true; fi     
+      run: NUMBER=NUMBER=$($CPPTEST_HOME%\bin\cpptestcov query -coverage LC .coverage/) && if [ $NUMBER -lt $LINE_COV_GATE ]; then echo "Line coverage quality gate failed"; echo "Expected result $LINE_COV_GATE%, echieved $NUMBER%"; echo "Check html report https://p-mhernandez.github.io/CovGoogleTest/"; false; else echo "Line coverage quality gate passed with $NUMBER% (required $LINE_COV_GATE%)"; echo "check html report https://p-mhernandez.github.io/CovGoogleTest/ for details"; true; fi     
     
     # Upload entire coverage directory
     - name: Archive coverage
