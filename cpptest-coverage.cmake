@@ -190,7 +190,7 @@ function (cpptest_enable_coverage)
   add_custom_target(cpptestcov-publish
     COMMAND
     ${CPPTEST_HOME_DIR}/bin/cpptestcov publish
-        -settings cpptestcov.properties
+        -settings ${CPPTEST_HOME_DIR}/cpptestcov.properties
         "${CPPTEST_SOURCE_DIR}/.coverage/coverage-stats-dtp.xml"
         "${CPPTEST_SOURCE_DIR}/.coverage/gtest-dtp.xml"
   )
