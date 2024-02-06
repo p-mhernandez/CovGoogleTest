@@ -159,7 +159,6 @@ function (cpptest_enable_coverage)
     &&
     ${CPPTEST_HOME_DIR}/bin/cpptestcov report dtp-summary
         -project CovGoogleTest
-        -build CovGoogleTest-${time}
         "${CPPTEST_SOURCE_DIR}/.coverage" >
         "${CPPTEST_SOURCE_DIR}/.coverage/coverage-stats-dtp.xml"
     &&
@@ -167,14 +166,12 @@ function (cpptest_enable_coverage)
         -scm 
         -checksum
         -project CovGoogleTest
-        -build CovGoogleTest-${time}
         "${CPPTEST_SOURCE_DIR}/.coverage" >
         "${CPPTEST_SOURCE_DIR}/.coverage/line-coverage-dtp.xml"
     &&
     ${CPPTEST_HOME_DIR}/bin/cpptestcov report dtp-gtest
         -scm 
         -project CovGoogleTest
-        -build CovGoogleTest-${time}
         "${CPPTEST_SOURCE_DIR}/build/gtest.xml" >
         "${CPPTEST_SOURCE_DIR}/.coverage/gtest-dtp.xml"
   )
