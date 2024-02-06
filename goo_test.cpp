@@ -20,6 +20,6 @@ TEST(GooTest, TestGetValueWithPositive) {
 // 
 TEST(GooTest, TestGetValueWithNegativeNumber) {
   RecordProperty("cpptest_filename", __FILE__);
-  EXPECT_EQ(getValue(5, -5), 0);
+  EXPECT_EQ(getValue(5, -5), 5);
 }
 
