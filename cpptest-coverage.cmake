@@ -78,7 +78,7 @@ function (cpptest_enable_coverage)
         "-Wl,--whole-archive \"${CPPTEST_RUNTIME_BUILD_DIR}/libcpptest_static.a\" -Wl,--no-whole-archive")
   endif()
 
-  # Add C/C++test coverage runtime library to executable linker flags
+  # Add C/C++test coverage runtime library to executable linker flags - comment
   set(CMAKE_EXE_LINKER_FLAGS
       "${CMAKE_EXE_LINKER_FLAGS} ${CPPTEST_LINKER_FLAGS}"
       PARENT_SCOPE)
